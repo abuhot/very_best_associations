@@ -8,6 +8,43 @@
       <dt>Name</dt>
       <dd><%= @cuisine.name %></dd>
 
+      <dt>Dishes</dt>
+      <dd>
+        <ul class="list-group">
+        <% Dish.where(:cuisine_id => @cuisine.id).each do |zebra| %>
+          <li class="list-group-item">
+            <%= zebra.name %>
+          </li>
+        <% end %>
+
+        <li class="list-group-item">
+         <form action="/create_dish" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control">
+      </div>
+
+      <!-- Label and input for cuisine_id -->
+       <input name="cuisine_id" type="hidden" value="<%= @cuisine.id %>" >
+
+      <button class="btn btn-success">
+        Create Dish
+      </button>
+      or
+      <a href="/dishes">Cancel</a>
+    </form>
+    </li>
+
+
+        </ul>
+        </dd>
+
     </dl>
 
     <div class="btn-group btn-group-justified">
